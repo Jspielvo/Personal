@@ -1,32 +1,42 @@
 #include "Game.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 // Default constructor
-Game::Game(Board* board) {
+Game::Game(Board* board, BaseRenderer* baseRenderer) {
     _board = board;
+    _baseRenderer = baseRenderer;
     _initializeGame();
     
 }
 
+// 
+Game::Game(Board* board, BaseRenderer* baseRenderer, sf::RenderWindow* window) {
+    this->window = window;
+
+    _board = board;
+    _baseRenderer = baseRenderer;
+    _initializeGame();
+
+}
+
 // Initializes game loop
-void Game::_initializeGame() {                                               
-    window.create(sf::VideoMode(0, 0), "Input");                // Window solely for input handling                     
-
+void Game::_initializeGame() {        
+    sf::Clock clock;
     while (!_gameOver()) {                                      // Continue looping until top row has a tile
-        sf::Clock clock;                                        // Clock to control framerate
-        int start = clock.getElapsedTime().asMilliseconds();    // Start timer
-        
-        system("cls");                                          // Clears console window
-        _handleEvents();                                        // Handles window input
-        
-        _board->DrawBoard();                                    // Outputs 0's, 1's, 2's, and 3's to console
-        _board->CheckForCompleteRows();                         // Finds and deletes complete rows
-
-        int end = clock.getElapsedTime().asMilliseconds();      // End timer
-        while (end - start < 300) {                             // Controls loop speed
-            end = clock.getElapsedTime().asMilliseconds();
+        if (clock.getElapsedTime().asMilliseconds() > _gameSpeed) {
+            _board->Move(SOUTH);
+            clock.restart();
         }
+        
+        _handleEvents();                                        // Handles window input
+        _baseRenderer->DrawBoard(_board->_board);               // Outputs visualization
+        _board->CheckForCompleteRows();                         // Finds and deletes complete rows
+        window->display();
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }
 
     std::cout << "\t\GAME OVER!" << std::endl;
@@ -36,9 +46,9 @@ void Game::_initializeGame() {
 void Game::_handleEvents() {
     sf::Event event;
 
-    while (window.pollEvent(event)) {
+    while (window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            window.close();
+            window->close();
             break;
         }
         else if (event.type == sf::Event::KeyPressed) {
@@ -60,13 +70,11 @@ void Game::_handleEvents() {
                 break;
 
             case sf::Keyboard::Escape:
-                window.close();
+                window->close();
                 break;
             }
         }
     }
-
-    _board->Move(SOUTH);
 }
 
 // Returns false if top row of board contains a permanent piece.

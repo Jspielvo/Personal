@@ -11,16 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BaseBoardRenderer.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Piece.cpp" />
+    <ClCompile Include="src\SFMLBoardRenderer.cpp" />
+    <ClCompile Include="src\TextBoardRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Board.h" />
+    <ClInclude Include="src\BaseRenderer.h" />
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Piece.h" />
+    <ClInclude Include="src\SFMLRenderer.h" />
+    <ClInclude Include="src\TextRenderer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E1BF640-5173-4D0B-BF92-28706313414E}</ProjectGuid>

@@ -5,6 +5,7 @@
 
 // Default constructor
 Board::Board(Piece* piece) {
+
     srand(time(NULL));
     _piece = piece;
     _activePosition.resize(2);
@@ -24,29 +25,6 @@ void Board::_initializeBoard() {
 }
 
 
-// Outputs visual representation of board array to console window.
-void Board::DrawBoard() {
-    for (int i = 0; i < BOARD_ROWS; i++)
-    {
-        for (int j = 0; j < BOARD_COLS; j++)
-        {
-            if (_board[i][j] == 3) {
-                std::cout << " * ";
-            }
-            else if (_board[i][j] == 2) {
-                std::cout << " + ";
-            }
-            else if (_board[i][j] == 1) {
-                std::cout << " * ";
-            }
-            else {
-                std::cout << " . ";
-            }
-        }
-        std::cout << std::endl;
-    }
-}
-
 // Writes a piece to the board at a specific row and column.
 void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
     _activePiece = piece;
@@ -58,9 +36,10 @@ void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
         {
             int y = row + i - 2;
             int x = col + j - 2;
-
-            if (_piece->matrix[piece][rotation][i][j] != 0) {
-                _board[y][x] = _piece->matrix[piece][rotation][i][j];
+            if (y < 20 && y >= 0 && x < 10 && x >= 0) {
+                if (_piece->matrix[piece][rotation][i][j] != 0) {
+                    _board[y][x] = _piece->matrix[piece][rotation][i][j];
+                }
             }
             
         }
