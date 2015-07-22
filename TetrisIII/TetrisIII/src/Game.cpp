@@ -80,7 +80,7 @@ void Game::_handleEvents() {
 bool Game::_gameOver() {
     for (int i = 0; i < 10; i++)
     {
-        if (_board->GetValueAt(0, i) > 2) {
+        if (_board->GetValueAt(0, i) < 0) {
             return true;
         }
     }

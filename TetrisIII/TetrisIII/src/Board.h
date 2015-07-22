@@ -25,8 +25,11 @@ private:
     std::vector<int> _activePosition;                                                         // activePiece's pivot positon respective to game board.
     int _activePiece;                                                                         // Current active Piece reference value.        
     int _activeRotation;                                                                      // activePiece's current rotation reference value.
+    int _activeColor;
     int _nextPiece;
     int _nextRotation;
+    int _nextColor;
+   
 
     void _initializeBoard();                                                                  // initializes _board array members to 0.
     void _clearBoard();                                                                       // Board values get reinitialized to 0 unless they are 3's (permanent persisting value).
