@@ -19,12 +19,12 @@ Game::Game(Board* board, BaseRenderer* baseRenderer, sf::RenderWindow* window) {
     _board = board;
     _baseRenderer = baseRenderer;
     _initializeGame();
-
 }
 
 // Initializes game loop
 void Game::_initializeGame() {        
     sf::Clock clock;
+
     while (!_gameOver()) {                                      // Continue looping until top row has a tile
         if (clock.getElapsedTime().asMilliseconds() > _gameSpeed) {
             _board->Move(SOUTH);
@@ -34,7 +34,6 @@ void Game::_initializeGame() {
         _handleEvents();                                        // Handles window input
         _baseRenderer->DrawBoard(_board->_board);               // Outputs visualization
         _board->CheckForCompleteRows();                         // Finds and deletes complete rows
-        window->display();
         
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }
@@ -81,7 +80,7 @@ void Game::_handleEvents() {
 bool Game::_gameOver() {
     for (int i = 0; i < 10; i++)
     {
-        if (_board->GetValueAt(0, i) == 3) {
+        if (_board->GetValueAt(0, i) > 2) {
             return true;
         }
     }

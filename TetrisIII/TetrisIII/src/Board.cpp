@@ -81,12 +81,18 @@ void Board::Move(Direction direction) {
             if (_canMove(WEST)) {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] - 1);
             }
+            else {
+                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
+            }
             break;
 
         case EAST:
             //Right
             if (_canMove(EAST)) {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] + 1);
+            }
+            else {
+                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
             break;
 
@@ -105,6 +111,24 @@ void Board::_clearBoard() {
         {
             if (_board[i][j] == 3) {
                 _board[i][j] = 3;
+            }
+            else if (_board[i][j] == 4) {
+                _board[i][j] = 4;
+            }
+            else if (_board[i][j] == 5) {
+                _board[i][j] = 5;
+            }
+            else if (_board[i][j] == 6) {
+                _board[i][j] = 6;
+            }
+            else if (_board[i][j] == 7) {
+                _board[i][j] = 7;
+            }
+            else if (_board[i][j] == 8) {
+                _board[i][j] = 8;
+            }
+            else if (_board[i][j] == 9) {
+                _board[i][j] = 9;
             }
             else {
                 _board[i][j] = 0;
@@ -162,7 +186,7 @@ bool Board::_hasCollided(int rotation, int eastAdj, int westAdj, int southAdj) {
                 }
                 else {
                     // Check for collision with existing pieces.
-                    if (_board[i + row - 2 + southAdj][j + col - 2 + westAdj + eastAdj] == 3) {
+                    if (_board[i + row - 2 + southAdj][j + col - 2 + westAdj + eastAdj] >= 3) {
                         return true;
                     }
                 }
@@ -204,12 +228,14 @@ std::vector<int> Board::GetPosition() const {
 
 // Rewrites each piece's values (1's and 2's) as 3's on the board
 void Board::_makePermanent() {
+    int randNum = rand() % 7 + 3;
+    std::cout << randNum << std::endl;
     for (int i = 0; i < BOARD_ROWS; i++)
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
             if (_board[i][j] == 1 || _board[i][j] == 2) {
-                _board[i][j] = 3;
+                _board[i][j] = randNum;
             }
         }
     }
