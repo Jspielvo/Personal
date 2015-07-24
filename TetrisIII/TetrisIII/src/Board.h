@@ -10,7 +10,7 @@ public:
     const static int BOARD_ROWS = 20;                                                         // Board dimension.
 
     int _board[BOARD_ROWS][BOARD_COLS];                                                       // 20 x 10 game board.
-
+     
     Board(Piece* piece);                                                                      // Default constructor.
     void PreviewNextPiece();
     void Move(Direction direction);                                                           // Moves active piece by one tile in chosen direction.
