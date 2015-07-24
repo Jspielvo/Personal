@@ -11,7 +11,6 @@ Board::Board(Piece* piece) {
     _activePosition.resize(2);
     _initializeBoard();
     _drawPieceAt(0, 0, 0, 4);
-    _nextColor = rand() % 7 + 3;
 }
 
 // Initializes all values of board array to 0.
@@ -28,6 +27,9 @@ void Board::_initializeBoard() {
 
 // Writes a piece to the board at a specific row and column.
 void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
+    _activePiece = piece;
+    _activeRotation = rotation;
+
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
@@ -36,7 +38,7 @@ void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
             int x = col + j - 2;
             if (y < 20 && y >= 0 && x < 10 && x >= 0) {
                 if (_piece->matrix[piece][rotation][i][j] != 0) {
-                    _board[y][x] = _activeColor;
+                    _board[y][x] = _piece->matrix[piece][rotation][i][j];
                 }
             }
             
@@ -107,19 +109,7 @@ void Board::_clearBoard() {
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            if (_board[i][j] == -1) {
-                _board[i][j] = -1;
-            }
-            else if (_board[i][j] == 0) {
-                _board[i][j] = 0;
-            }
-            else if (_board[i][j] == 1) {
-                _board[i][j] = 1;
-            }
-            else if (_board[i][j] == 2) {
-                _board[i][j] = 2;
-            }
-            else if (_board[i][j] == 3) {
+            if (_board[i][j] == 3) {
                 _board[i][j] = 3;
             }
             else if (_board[i][j] == 4) {
@@ -139,6 +129,9 @@ void Board::_clearBoard() {
             }
             else if (_board[i][j] == 9) {
                 _board[i][j] = 9;
+            }
+            else {
+                _board[i][j] = 0;
             }
         }
     }
@@ -235,12 +228,14 @@ std::vector<int> Board::GetPosition() const {
 
 // Rewrites each piece's values (1's and 2's) as 3's on the board
 void Board::_makePermanent() {
+    int randNum = rand() % 7 + 3;
+    std::cout << randNum << std::endl;
     for (int i = 0; i < BOARD_ROWS; i++)
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
             if (_board[i][j] == 1 || _board[i][j] == 2) {
-                _board[i][j] = _activeColor;
+                _board[i][j] = randNum;
             }
         }
     }
@@ -249,11 +244,12 @@ void Board::_makePermanent() {
 void Board::_setNextPieceParameters() {
     _nextPiece = rand() % 7;
     _nextRotation = rand() % 4;
-    _nextColor = rand() % 4;
 }
 
 void Board::PreviewNextPiece() {
     _setNextPieceParameters();
+
+std::cout << std::endl;
 
     for (int i = 0; i < 5; i++)
     {
@@ -278,7 +274,6 @@ void Board::_getNextPiece() {
     _setNextPieceParameters();
     _activePiece = _nextPiece;
     _activeRotation = _nextRotation;
-    _activeColor = _nextColor;
 
     _drawPieceAt(_nextPiece, _nextRotation, 0, 4);
 }
