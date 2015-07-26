@@ -3,7 +3,7 @@
 #include <random>
 
 sf::Font SFMLRenderer::_font;
-sf::Text SFMLRenderer::_header;
+sf::Text SFMLRenderer::_headerText;
 
 
 SFMLRenderer::SFMLRenderer() {
@@ -13,7 +13,7 @@ SFMLRenderer::SFMLRenderer() {
 }
 
 void SFMLRenderer::_createWindow() {
-    Window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tetris - by John Spielvogel");
+    Window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tetris - by John Spielvogel", sf::Style::Titlebar | sf::Style::Close);
 }
 
 void SFMLRenderer::_initializeGUI() {
@@ -21,6 +21,9 @@ void SFMLRenderer::_initializeGUI() {
     _boardPos.y = WINDOW_HEIGHT * 0.5;
 
     _initializeHeader();
+    _initializeFooter();
+    _initializeLeftHUD();
+    _initializeRightHUD();
     _initializeTile();
 }
 
@@ -28,10 +31,12 @@ sf::RenderWindow& SFMLRenderer::GetWindow() {
     sf::RenderWindow &tempWindow = Window;
     return tempWindow;
 }
+
 void SFMLRenderer::_drawTile(int type) {
     Window.draw(_getTileOfType(type));
 }
-void SFMLRenderer::DrawBoard(int board[20][10]) {
+
+void SFMLRenderer::DrawBoard(int board[20][10], int lowPos) {
     for (int i = 0; i < 20; i++)
     {
         for (int j = 0; j < 10; j++)
@@ -41,8 +46,21 @@ void SFMLRenderer::DrawBoard(int board[20][10]) {
         }
         _setTilePos(_tileSize.y * i + _tileSize.y, 0);
     }
+    Window.draw(_headerText);
     Window.draw(_header);
+    Window.draw(_footer);
+    Window.draw(_leftHUD);
+    Window.draw(_rightHUD);
+    Window.draw(_score);
     Window.display();
+}
+
+void SFMLRenderer::DrawScore(int score) {
+    _score.setFont(_font);
+    _score.setPosition(50, 63);
+    _score.setCharacterSize(50);
+    _score.setColor(sf::Color::White);
+    _score.setString(std::to_string(score));
 }
 
 void SFMLRenderer::_loadFont() {
@@ -52,18 +70,58 @@ void SFMLRenderer::_loadFont() {
     }
 }
 
+
 void SFMLRenderer::_initializeHeader() {
    _loadFont();
 
-    _header.setString("TETRIS");
-    _header.setFont(_font);
-    _header.setCharacterSize(50);
-    _header.setColor(sf::Color::Green);
-    _header.setOrigin(_header.getLocalBounds().width / 2, _header.getLocalBounds().height / 2);
-    _headerPos.x = WINDOW_WIDTH / 2;
-    _headerPos.y = _boardPos.y * 0.125 + -_header.getLocalBounds().height / 2;
-    _header.setPosition(_headerPos);
+   sf::Vector2f headerSize;
+   headerSize.x = 300;
+   headerSize.y = 100;
+   _header.setFillColor(sf::Color::Color(0, 0, 0, 0));
+   _header.setSize(headerSize);
+   _header.setPosition(250, 0);
+
+    _headerText.setString("TETRIS");
+    _headerText.Bold;
+    _headerText.setFont(_font);
+    _headerText.setCharacterSize(50);
+    _headerText.setColor(sf::Color::Color(0, 88, 150));
+    _headerText.setOrigin(_headerText.getLocalBounds().width / 2, _headerText.getLocalBounds().height / 2);
+    _headerTextPos.x = WINDOW_WIDTH / 2;
+    _headerTextPos.y = _boardPos.y * 0.125 + -_headerText.getLocalBounds().height / 2;
+    _headerText.setPosition(_headerTextPos);
     
+}
+
+void SFMLRenderer::_initializeFooter() {
+    sf::Vector2f footerSize;
+    footerSize.x = 300;
+    footerSize.y = 100;
+    _footer.setFillColor(sf::Color::Color(79, 79, 79, 255));
+    _footer.setSize(footerSize);
+    _footer.setPosition(250, 700);
+}
+
+void SFMLRenderer::_initializeLeftHUD() {
+    
+    if (!imageL.loadFromFile("data/leftHUD.png")) {
+        std::cout << "Error loading leftHUD.png." << std::endl;
+        exit(1);
+    }
+
+    textureL.loadFromImage(imageL);    
+    _leftHUD.setTexture(textureL);
+}
+
+void SFMLRenderer::_initializeRightHUD() {
+    if (!imageR.loadFromFile("data/rightHUD.png")) {
+        std::cout << "Error loading rightHUD.png." << std::endl;
+        exit(1);
+    }
+
+    textureR.loadFromImage(imageR);
+    _rightHUD.setTexture(textureR);
+    _rightHUD.setPosition(550, 0);
 }
 
 sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
@@ -137,8 +195,8 @@ void SFMLRenderer::_initializeTile() {
 
 
     _tile.setFillColor(sf::Color::Transparent);
-    _tile.setOutlineColor(sf::Color::White);
-    _tile.setOutlineThickness((double)0.6);
+    _tile.setOutlineColor(sf::Color::Color(75, 75, 75, 255));
+    _tile.setOutlineThickness((double)0.51);
     _tile.setSize(_tileSize);
     _tile.setPosition(_boardPos);
 }

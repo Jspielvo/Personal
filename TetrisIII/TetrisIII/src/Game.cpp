@@ -24,15 +24,18 @@ Game::Game(Board* board, BaseRenderer* baseRenderer, sf::RenderWindow* window) {
 void Game::_initializeGame() {        
     sf::Clock clock;
 
-    while (!_gameOver()) {                                               // Continue looping until top row has a tile
+    while (!_gameOver()) {                                                                       // Continue looping until top row has a tile
         window->clear();
+
         if (clock.getElapsedTime().asMilliseconds() > _gameSpeed) {
             _board->Move(SOUTH);
             clock.restart();
         }
         
-        _handleEvents();                                                // Handles window input
-        _baseRenderer->DrawBoard(_board->_board);                       // Outputs visualization
+        _handleEvents();                                                                         // Handles window input
+        _increaseDifficulty();
+        _baseRenderer->DrawBoard(_board->_board, _board->GetLowestTile());                       // Outputs visualization
+        _baseRenderer->DrawScore(_board->player.Score);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }
@@ -73,6 +76,18 @@ void Game::_handleEvents() {
         window->close();
         exit(0);
     }  
+}
+
+void Game::_increaseDifficulty() {
+    if (_board->player.Score % 400 == 1) {
+        _increaseSpeed(_gameSpeed - 50);
+        _gameLevel++;
+        std::cout << _gameLevel << std::endl;
+    }
+}
+
+void Game::_increaseSpeed(int speed) {
+    _gameSpeed = speed;
 }
 
 // Returns false if top row of board contains a permanent piece.

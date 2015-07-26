@@ -42,6 +42,9 @@
     <ClCompile Include="src\TextBoardRenderer.cpp">
       <Filter>Source Files\Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Board.h">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="src\TextRenderer.h">
       <Filter>Header Files\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,10 +10,13 @@ private:
     BaseRenderer* _baseRenderer;
 
     int _gameSpeed = 500;
+    int _gameLevel = 0;
 
     void _initializeGame();                             // Initializes main game loop.
     void _handleEvents();                               // Handles keyboard inputs.
     bool _gameOver();                                   // Returns true if top row of board contains a permanent tile (represented by 3).
+    void _increaseSpeed(int speed);
+    void _increaseDifficulty();
 
 public:
     Game(Board* board, BaseRenderer* baseRenderer);

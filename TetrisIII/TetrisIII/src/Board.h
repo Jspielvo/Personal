@@ -1,4 +1,5 @@
 #pragma once
+#include "Player.h"
 #include "Direction.h"
 #include "Piece.h"
 #include <vector>
@@ -10,7 +11,7 @@ public:
     const static int BOARD_ROWS = 20;                                                         // Board dimension.
 
     int _board[BOARD_ROWS][BOARD_COLS];                                                       // 20 x 10 game board.
-     
+    Player player;
     Board(Piece* piece);                                                                      // Default constructor.
     void PreviewNextPiece();
     void Move(Direction direction);                                                           // Moves active piece by one tile in chosen direction.
@@ -18,14 +19,18 @@ public:
     int GetValueAt(int row, int col);                                                         // Returns board[row][col] value.
     void SetPosition(int row, int col);                                                       // Sets pivot position respective to board ( _activePosition[0] = row and _activePosition[1] = col ).
     std::vector<int> GetPosition() const;                                                     // Returns pivot position respective to board.
+    int GetLowestTile();
     void _COUT_activePosition();                                                              // Test: Outputs current _activePosition vector values to console window.
 
 private:   
+    
+
     Piece* _piece;
     std::vector<int> _activePosition;                                                         // activePiece's pivot positon respective to game board.
     int _activePiece;                                                                         // Current active Piece reference value.        
     int _activeRotation;                                                                      // activePiece's current rotation reference value.
     int _activeColor;
+    int _previewPiece;
     int _nextPiece;
     int _nextRotation;
     int _nextColor;

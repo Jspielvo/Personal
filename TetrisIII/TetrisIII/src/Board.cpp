@@ -13,7 +13,6 @@ enum TileType{
     activePurple,
     activeTeal,
     activeOrange
-    
 };
 
 // Default constructor
@@ -36,7 +35,6 @@ void Board::_initializeBoard() {
         }
     }
 }
-
 
 // Writes a piece to the board at a specific row and column.
 void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
@@ -287,6 +285,7 @@ bool Board::_checkForCompleteRows() {
 
 void Board::_clearCompleteRows() {
     _clearRow(_getCompleteRow());
+    player.Score += 100;
 }
 
 // Checks board for rows not containing a blank tile (0)
@@ -332,7 +331,14 @@ void Board::DropTile() {
     }
 }
 
-
+int Board::GetLowestTile() {
+    for (int i = _activePosition[0] + 1; i < BOARD_ROWS - 1; i++)
+    {
+        if (_board[i + 1][_activePosition[1]] < 0) {
+            return i;
+        }
+    }
+}
 
 
 
