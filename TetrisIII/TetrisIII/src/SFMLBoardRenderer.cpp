@@ -1,106 +1,123 @@
+#include <iostream>
 #include "SFMLRenderer.h"
 #include <random>
 
+sf::Font SFMLRenderer::_font;
+sf::Text SFMLRenderer::_header;
+
+
 SFMLRenderer::SFMLRenderer() {
     _createWindow();
-    _initializeTile();
+    _initializeGUI();
     srand(time(NULL));
 }
 
 void SFMLRenderer::_createWindow() {
-    Window.create(sf::VideoMode(300, 500), "Tetris - by John Spielvogel");
+    Window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tetris - by John Spielvogel");
+}
+
+void SFMLRenderer::_initializeGUI() {
+    _boardPos.x = WINDOW_WIDTH * 0.5;
+    _boardPos.y = WINDOW_HEIGHT * 0.5;
+
+    _initializeHeader();
+    _initializeTile();
 }
 
 sf::RenderWindow& SFMLRenderer::GetWindow() {
     sf::RenderWindow &tempWindow = Window;
     return tempWindow;
 }
-
+void SFMLRenderer::_drawTile(int type) {
+    Window.draw(_getTileOfType(type));
+}
 void SFMLRenderer::DrawBoard(int board[20][10]) {
     for (int i = 0; i < 20; i++)
     {
         for (int j = 0; j < 10; j++)
         {
-            _setPixelPos(20 * j + 20, 20 * i + 20);
-            if (board[i][j] == 0) {
-                Window.draw(_getTileOfType(0));
-            }
-            else if (board[i][j] == 1) {
-                Window.draw(_getTileOfType(1));
-            }
-            else if (board[i][j] == 2) {
-                Window.draw(_getTileOfType(2));
-            }
-            else if (board[i][j] == 3) {
-                Window.draw(_getTileOfType(3));
-            }
-            else if (board[i][j] == 4) {
-                Window.draw(_getTileOfType(4));
-            }
-            else if (board[i][j] == 5) {
-                Window.draw(_getTileOfType(5));
-            }
-            else if (board[i][j] == 6) {
-                Window.draw(_getTileOfType(6));
-            }
-            else if (board[i][j] == 7) {
-                Window.draw(_getTileOfType(7));
-            }
-            else if (board[i][j] == 8) {
-                Window.draw(_getTileOfType(8));
-            }
-            else if (board[i][j] == 9) {
-                Window.draw(_getTileOfType(9));
-            }
-            else {
-                Window.draw(_getTileOfType(0));
-            }
+            _setTilePos(_tileSize.y * (j - 5) , _tileSize.x * (i - 10));
+            _drawTile(board[i][j]);
         }
-        _setPixelPos(20 * i + 20, 20);
+        _setTilePos(_tileSize.y * i + _tileSize.y, 0);
     }
+    Window.draw(_header);
     Window.display();
+}
+
+void SFMLRenderer::_loadFont() {
+    if (!_font.loadFromFile("data/Stencil.ttf")) {
+        std::cout << "Error opening font file." << std::endl;
+        exit(1);
+    }
+}
+
+void SFMLRenderer::_initializeHeader() {
+   _loadFont();
+
+    _header.setString("TETRIS");
+    _header.setFont(_font);
+    _header.setCharacterSize(50);
+    _header.setColor(sf::Color::Green);
+    _header.setOrigin(_header.getLocalBounds().width / 2, _header.getLocalBounds().height / 2);
+    _headerPos.x = WINDOW_WIDTH / 2;
+    _headerPos.y = _boardPos.y * 0.125 + -_header.getLocalBounds().height / 2;
+    _header.setPosition(_headerPos);
+    
 }
 
 sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
     switch (parameter) {
+
         case 0:
+            // Empty Black
             _tile.setFillColor(sf::Color::Black);
             break;
 
+        case -1:
         case 1:
-            _tile.setFillColor(sf::Color::Green);
+            // Pivot Grey
+            _tile.setFillColor(sf::Color::Color(155, 155, 155));
             break;
 
+        case -2:
         case 2:
             _tile.setFillColor(sf::Color::Red);
             break;
 
+        case -3:
         case 3:
             _tile.setFillColor(sf::Color::Blue);
             break;
 
+        case -4:
         case 4:
-            _tile.setFillColor(sf::Color::Yellow);
+            // Green
+            _tile.setFillColor(sf::Color::Color(53, 168, 49));
             break;
 
+        case -5:
         case 5:
-            _tile.setFillColor(sf::Color::Color(69, 0, 68));
+            // Yellow
+            _tile.setFillColor(sf::Color::Color(209, 214, 51));
             break;
 
+        case -6:
         case 6:
-            _tile.setFillColor(sf::Color::Color(117, 117, 117));
+            // Light blue
+            _tile.setFillColor(sf::Color::Color(41, 128, 185));
             break;
 
+        case -7:
         case 7:
-            _tile.setFillColor(sf::Color::Color(0, 148, 189));
+            // Purple
+            _tile.setFillColor(sf::Color::Color(103, 10, 173));
             break;
 
+        case -8:
         case 8:
-            _tile.setFillColor(sf::Color::Color(255, 116, 21));
-            break;
-
-        case 9: 
-            _tile.setFillColor(sf::Color::Color(94, 28, 13));
+            // Orange
+            _tile.setFillColor(sf::Color::Color(214, 91, 43));
             break;
 
         default:
@@ -112,21 +129,20 @@ sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
 }
 
 void SFMLRenderer::_initializeTile() {
-    _tileSize.x = 20;
-    _tileSize.y = 20;
-    _pixelPos.x = 0;
-    _pixelPos.y = 0;
+    _tileSize.x = WINDOW_WIDTH * 0.0375;
+    _tileSize.y = WINDOW_HEIGHT * 0.0375;
+   
+    //_tileSize.x = 30;
+    //_tileSize.y = 30;
+
 
     _tile.setFillColor(sf::Color::Transparent);
     _tile.setOutlineColor(sf::Color::White);
-    _tile.setOutlineThickness((double)0.55);
+    _tile.setOutlineThickness((double)0.6);
     _tile.setSize(_tileSize);
-    _tile.setPosition(_pixelPos);
+    _tile.setPosition(_boardPos);
 }
 
-void SFMLRenderer::_setPixelPos(int x, int y) {
-    _pixelPos.x = (float)x;
-    _pixelPos.y = (float)y;
-
-    _tile.setPosition(_pixelPos);
+void SFMLRenderer::_setTilePos(int x, int y) {
+    _tile.setPosition(x + _boardPos.x, y + _boardPos.y);
 }

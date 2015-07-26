@@ -3,12 +3,25 @@
 #include <random>
 #include <time.h>
 
+enum TileType{
+    bgBlack,
+    activePivotWhite,
+    activeRed,
+    activeBlue,
+    activeGreen,
+    activeYellow,
+    activePurple,
+    activeTeal,
+    activeOrange
+    
+};
+
 // Default constructor
 Board::Board(Piece* piece) {
-
     srand(time(NULL));
     _piece = piece;
     _activePosition.resize(2);
+    _activeColor = rand() % 7 + 2;
     _initializeBoard();
     _drawPieceAt(0, 0, 0, 4);
 }
@@ -19,7 +32,7 @@ void Board::_initializeBoard() {
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            _board[i][j] = 0;
+            _board[i][j] = TileType::bgBlack;
         }
     }
 }
@@ -36,9 +49,15 @@ void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
         {
             int y = row + i - 2;
             int x = col + j - 2;
+
             if (y < 20 && y >= 0 && x < 10 && x >= 0) {
-                if (_piece->matrix[piece][rotation][i][j] != 0) {
-                    _board[y][x] = _piece->matrix[piece][rotation][i][j];
+
+                if (_piece->matrix[piece][rotation][i][j] == 1) {
+                    _board[y][x] = 1;
+                }
+
+                else if (_piece->matrix[piece][rotation][i][j] != TileType::bgBlack) {
+                    _board[y][x] = _activeColor;
                 }
             }
             
@@ -59,6 +78,7 @@ void Board::Move(Direction direction) {
                 _activeRotation = (_activeRotation == 3) ? -1 : _activeRotation;
                 _drawPieceAt(_activePiece, _activeRotation + 1, _activePosition[0], _activePosition[1]);
             }
+
             else {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
@@ -69,9 +89,11 @@ void Board::Move(Direction direction) {
             if (_canMove(SOUTH)) {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0] + 1, _activePosition[1]);
             }
+
             else {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
                 _makePermanent();
+                _checkAllRows();
                 _getNextPiece();
             }
             break;
@@ -81,6 +103,7 @@ void Board::Move(Direction direction) {
             if (_canMove(WEST)) {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] - 1);
             }
+
             else {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
@@ -91,47 +114,36 @@ void Board::Move(Direction direction) {
             if (_canMove(EAST)) {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] + 1);
             }
+
             else {
                 _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
             break;
 
+            
         default:
             break;
     }
 }
 
 
+void Board::_drawTile(int i, int j, int tileNum) {
+    _board[i][j] = tileNum;
+}
+
 // Reinitializes all the values of the board to 0, except for persisting pieces (represented by 3's).
 void Board::_clearBoard() {
-
+     
     for (int i = 0; i < BOARD_ROWS; i++)
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            if (_board[i][j] == 3) {
-                _board[i][j] = 3;
+            if (_board[i][j] <= TileType::bgBlack) {
+                _drawTile(i, j, _board[i][j]);
             }
-            else if (_board[i][j] == 4) {
-                _board[i][j] = 4;
-            }
-            else if (_board[i][j] == 5) {
-                _board[i][j] = 5;
-            }
-            else if (_board[i][j] == 6) {
-                _board[i][j] = 6;
-            }
-            else if (_board[i][j] == 7) {
-                _board[i][j] = 7;
-            }
-            else if (_board[i][j] == 8) {
-                _board[i][j] = 8;
-            }
-            else if (_board[i][j] == 9) {
-                _board[i][j] = 9;
-            }
+
             else {
-                _board[i][j] = 0;
+                _drawTile(i, j, TileType::bgBlack);
             }
         }
     }
@@ -179,14 +191,16 @@ bool Board::_hasCollided(int rotation, int eastAdj, int westAdj, int southAdj) {
     {
         for (int j = 0; j < 5; j++)
         {
-            if (_piece->matrix[_activePiece][rotation][i][j] != 0) {
-                // Check for collsion with board boundaries.
+            if (_piece->matrix[_activePiece][rotation][i][j] != TileType::bgBlack) {
+
+                // Check for collision with board boundaries.
                 if (i + row + southAdj > 21 || i + row < 0 || j + col + eastAdj > 11 || j + col + westAdj <= 1) {
                     return true;
                 }
+
                 else {
-                    // Check for collision with existing pieces.
-                    if (_board[i + row - 2 + southAdj][j + col - 2 + westAdj + eastAdj] >= 3) {
+                    // Check for collision with existing pieces (negative values persist through clear board).
+                    if (_board[i + row - 2 + southAdj][j + col - 2 + westAdj + eastAdj] < 0) {
                         return true;
                     }
                 }
@@ -197,13 +211,13 @@ bool Board::_hasCollided(int rotation, int eastAdj, int westAdj, int southAdj) {
     return false;
 }
 
-// Scans game board for pivot piece (#2) and calls SetPosition to store it.
+// Scans game board for pivot piece (1) and calls SetPosition to store it.
 void Board::_storeCurrentPosition() {
     for (int i = 0; i < BOARD_ROWS; i++)
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            if (_board[i][j] == 2) {
+            if (_board[i][j] == 1) {
                 SetPosition(i , j);
             }
         }
@@ -221,74 +235,61 @@ void Board::SetPosition(int row, int col) {
     _activePosition[1] = col;
 }
 
-// Returns pivot positon respective to board
+// Returns the pivot positon of the piece represented by the value 2.
 std::vector<int> Board::GetPosition() const {
     return _activePosition;
 }
 
-// Rewrites each piece's values (1's and 2's) as 3's on the board
+// Rewrites each piece's values as negative persisting values.
 void Board::_makePermanent() {
-    int randNum = rand() % 7 + 3;
-    std::cout << randNum << std::endl;
+
     for (int i = 0; i < BOARD_ROWS; i++)
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            if (_board[i][j] == 1 || _board[i][j] == 2) {
-                _board[i][j] = randNum;
+            if (_board[i][j] > 0) {
+                _board[i][j] = -_activeColor;
             }
         }
     }
 }
 
+// Randomly sets the parameters of the next piece.
 void Board::_setNextPieceParameters() {
     _nextPiece = rand() % 7;
     _nextRotation = rand() % 4;
+    _nextColor = rand() % 7 + 2;
 }
 
+// Implement function! //
 void Board::PreviewNextPiece() {
     _setNextPieceParameters();
-
-std::cout << std::endl;
-
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            if (_piece->matrix[_nextPiece][_nextRotation][i][j] == 2) {
-                std::cout << " 2 ";
-            }
-            else if (_piece->matrix[_nextPiece][_nextRotation][i][j] == 1) {
-                std::cout << " 1 ";
-            }
-            else {
-                std::cout << "   ";
-            }
-        }
-        std::cout << std::endl;
-    }
 }
 
 // Creates and draws a random piece of random orientation and sets _activePiece and _activeRotation
 void Board::_getNextPiece() {
     _setNextPieceParameters();
+
     _activePiece = _nextPiece;
     _activeRotation = _nextRotation;
+    _activeColor = _nextColor;
 
     _drawPieceAt(_nextPiece, _nextRotation, 0, 4);
 }
 
-// Testing Function: Outputs pivot position respective to board.
-void Board::_COUT_activePosition() {
-    std::cout << "Position:\trow = " << _activePosition[0] << "\tcol = " << _activePosition[1] << std::endl;
-}
-
-void Board::CheckForCompleteRows() {
+// Calls _clearRow on rows not containing blank tiles (0).
+bool Board::_checkForCompleteRows() {
     if (_getCompleteRow() >= 0) {
-        _clearRow(_getCompleteRow());
+        return true;
     }
+    return false;
 }
 
+void Board::_clearCompleteRows() {
+    _clearRow(_getCompleteRow());
+}
+
+// Checks board for rows not containing a blank tile (0)
 int Board::_getCompleteRow() {
     for (int i = 0; i < BOARD_ROWS; i++)
     {
@@ -308,6 +309,7 @@ int Board::_getCompleteRow() {
     return -1;
 }
 
+// Clears row by overwriting it with the row above it, repeating until the top of the board.
 void Board::_clearRow(int row) {
     for (int i = row; i > 1; i--)
     {
@@ -316,4 +318,36 @@ void Board::_clearRow(int row) {
             _board[i][j] = _board[i - 1][j];
         }
     }
+}
+
+void Board::_checkAllRows() {
+    while (_checkForCompleteRows()) {
+        _clearCompleteRows();
+    }
+}
+
+void Board::DropTile() {
+    while (_canMove(SOUTH)) {
+        Move(SOUTH);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Testing Function: Outputs pivot position respective to board.
+void Board::_COUT_activePosition() {
+    std::cout << "Position:\trow = " << _activePosition[0] << "\tcol = " << _activePosition[1] << std::endl;
 }
