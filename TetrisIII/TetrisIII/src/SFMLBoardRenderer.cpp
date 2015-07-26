@@ -57,8 +57,8 @@ void SFMLRenderer::DrawBoard(int board[20][10], int lowPos) {
 
 void SFMLRenderer::DrawScore(int score) {
     _score.setFont(_font);
-    _score.setPosition(50, 63);
-    _score.setCharacterSize(50);
+    _score.setPosition(50, 70);
+    _score.setCharacterSize(40);
     _score.setColor(sf::Color::White);
     _score.setString(std::to_string(score));
 }
