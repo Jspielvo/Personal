@@ -34,7 +34,7 @@ void Game::_initializeGame() {
         
         _handleEvents();                                                                         // Handles window input
         _increaseDifficulty();
-        _baseRenderer->DrawBoard(_board->_board, _board->GetLowestTile());                       // Outputs visualization
+        _baseRenderer->RenderGUI(_board->_board, _board->GetLowestTile());                       // Outputs visualization
         _baseRenderer->DrawScore(_board->player.Score);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));

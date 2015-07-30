@@ -14,31 +14,42 @@ private:
     static sf::Font _font;
     static sf::Text _headerText;
     sf::Text _score;
-    sf::RectangleShape _header;
+    sf::Image imageH;
     sf::Image imageL;
     sf::Image imageR;
+    sf::Image imageB;
+    sf::Image imageBg;
+    sf::Texture textureH;
+    sf::Texture textureB;
     sf::Texture textureL;
     sf::Texture textureR;
+    sf::Texture textureBg;
+    sf::Sprite _header;
     sf::Sprite _leftHUD;
     sf::Sprite _rightHUD;
-    sf::RectangleShape _footer;
+    sf::Sprite _footerHUD;
+    sf::Sprite _background;
 
     void _createWindow();
     void _initializeTile();
     void _setTilePos(int x, int y);
     void _drawTile(int type);
+    void _initializeBackground();
     void _initializeHeader();
     void _initializeFooter();
     void _initializeLeftHUD();
     void _initializeRightHUD();
     void _initializeGUI();
+    void _drawGUI();
     void _loadFont(); 
+    void _drawLeadingZeroes(int score);
+    int _getLengthOfInt(int value, int base);
 
 public:
     SFMLRenderer();
     sf::RenderWindow Window;
 
     sf::RenderWindow& GetWindow();
-    void DrawBoard(int board[20][10], int lowPos);
+    void RenderGUI(int board[20][10], int lowPos);
     void DrawScore(int score);
 };

@@ -3,5 +3,5 @@
 
 class TextRenderer : public BaseRenderer {
 public:
-    void DrawBoard(int board[20][10]);
+    void RenderGUI(int board[20][10]);
 };

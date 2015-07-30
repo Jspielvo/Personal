@@ -20,6 +20,7 @@ void SFMLRenderer::_initializeGUI() {
     _boardPos.x = WINDOW_WIDTH * 0.5;
     _boardPos.y = WINDOW_HEIGHT * 0.5;
 
+    _initializeBackground();
     _initializeHeader();
     _initializeFooter();
     _initializeLeftHUD();
@@ -36,7 +37,9 @@ void SFMLRenderer::_drawTile(int type) {
     Window.draw(_getTileOfType(type));
 }
 
-void SFMLRenderer::DrawBoard(int board[20][10], int lowPos) {
+void SFMLRenderer::RenderGUI(int board[20][10], int lowPos) {
+    Window.draw(_background);
+
     for (int i = 0; i < 20; i++)
     {
         for (int j = 0; j < 10; j++)
@@ -46,25 +49,70 @@ void SFMLRenderer::DrawBoard(int board[20][10], int lowPos) {
         }
         _setTilePos(_tileSize.y * i + _tileSize.y, 0);
     }
-    Window.draw(_headerText);
-    Window.draw(_header);
-    Window.draw(_footer);
-    Window.draw(_leftHUD);
-    Window.draw(_rightHUD);
-    Window.draw(_score);
+
+    _drawGUI();
     Window.display();
+}
+
+void SFMLRenderer::_drawGUI() {
+    Window.draw(_score);
+    Window.draw(_headerText);
+    //Window.draw(_header);
+    //Window.draw(_footerHUD);
+    //Window.draw(_leftHUD);
+    //Window.draw(_rightHUD);
 }
 
 void SFMLRenderer::DrawScore(int score) {
     _score.setFont(_font);
-    _score.setPosition(50, 70);
-    _score.setCharacterSize(40);
-    _score.setColor(sf::Color::White);
     _score.setString(std::to_string(score));
+    _score.setCharacterSize(30);
+    _score.setColor(sf::Color::White);
+
+    _drawLeadingZeroes(score);
+
+    _score.setOrigin(_score.getLocalBounds().width / 2, _score.getLocalBounds().height / 2);
+    _score.setPosition(120, WINDOW_HEIGHT * 0.2875);
+
+}
+
+void SFMLRenderer::_drawLeadingZeroes(int score) {
+    if (_getLengthOfInt(score, 10) == 3) {
+        _score.setString("00000" + std::to_string(score));
+    }
+    else if (_getLengthOfInt(score, 10) == 4) {
+        _score.setString("0000" + std::to_string(score));
+    }
+    else if (_getLengthOfInt(score, 10) == 5) {
+        _score.setString("0000" + std::to_string(score));
+    }
+    else if (_getLengthOfInt(score, 10) == 6) {
+        _score.setString("000" + std::to_string(score));
+    }
+    else if (_getLengthOfInt(score, 10) == 7) {
+        _score.setString("00" + std::to_string(score));
+    }
+    else if (_getLengthOfInt(score, 10) == 8) {
+        _score.setString("0" + std::to_string(score));
+    }
+    else {
+        _score.setString("00000000");
+    }
+}
+
+int SFMLRenderer::_getLengthOfInt(int value, int base) {
+    int numberOfDigits = 0;
+
+    do {
+        numberOfDigits++;
+        value /= base;
+    } while (value);
+
+    return numberOfDigits;
 }
 
 void SFMLRenderer::_loadFont() {
-    if (!_font.loadFromFile("data/Stencil.ttf")) {
+    if (!_font.loadFromFile("data/Bauhs93.ttf")) {
         std::cout << "Error opening font file." << std::endl;
         exit(1);
     }
@@ -74,18 +122,20 @@ void SFMLRenderer::_loadFont() {
 void SFMLRenderer::_initializeHeader() {
    _loadFont();
 
-   sf::Vector2f headerSize;
-   headerSize.x = 300;
-   headerSize.y = 100;
-   _header.setFillColor(sf::Color::Color(0, 0, 0, 0));
-   _header.setSize(headerSize);
-   _header.setPosition(250, 0);
+   if (!imageH.loadFromFile("data/header.png")) {
+       std::cout << "Error loading header.png" << std::endl;
+       exit(1);
+   }
+
+   textureH.loadFromImage(imageH);
+   _header.setTexture(textureH);
+   _header.setPosition(249, 0);
 
     _headerText.setString("TETRIS");
     _headerText.Bold;
     _headerText.setFont(_font);
     _headerText.setCharacterSize(50);
-    _headerText.setColor(sf::Color::Color(0, 88, 150));
+    _headerText.setColor(sf::Color::White);
     _headerText.setOrigin(_headerText.getLocalBounds().width / 2, _headerText.getLocalBounds().height / 2);
     _headerTextPos.x = WINDOW_WIDTH / 2;
     _headerTextPos.y = _boardPos.y * 0.125 + -_headerText.getLocalBounds().height / 2;
@@ -93,13 +143,25 @@ void SFMLRenderer::_initializeHeader() {
     
 }
 
+
 void SFMLRenderer::_initializeFooter() {
-    sf::Vector2f footerSize;
-    footerSize.x = 300;
-    footerSize.y = 100;
-    _footer.setFillColor(sf::Color::Color(79, 79, 79, 255));
-    _footer.setSize(footerSize);
-    _footer.setPosition(250, 700);
+    if (!imageB.loadFromFile("data/footerHUD.png")) {
+        std::cout << "Error loading footerHUD.png" << std::endl;
+        exit(1);
+    }
+    
+    textureB.loadFromImage(imageB);
+    _footerHUD.setTexture(textureB);
+    _footerHUD.setPosition(249, 700);
+}
+
+void SFMLRenderer::_initializeBackground() {
+    if (!imageBg.loadFromFile("data/bg.png")) {
+        std::cout << "Error loading bg.png." << std::endl;
+        exit(1);
+    }
+    textureBg.loadFromImage(imageBg);
+    _background.setTexture(textureBg);
 }
 
 void SFMLRenderer::_initializeLeftHUD() {
@@ -108,9 +170,9 @@ void SFMLRenderer::_initializeLeftHUD() {
         std::cout << "Error loading leftHUD.png." << std::endl;
         exit(1);
     }
-
     textureL.loadFromImage(imageL);    
     _leftHUD.setTexture(textureL);
+    
 }
 
 void SFMLRenderer::_initializeRightHUD() {
@@ -124,12 +186,27 @@ void SFMLRenderer::_initializeRightHUD() {
     _rightHUD.setPosition(550, 0);
 }
 
+void SFMLRenderer::_initializeTile() {
+    _tileSize.x = WINDOW_WIDTH * 0.0375;
+    _tileSize.y = WINDOW_HEIGHT * 0.0375;
+
+    _tile.setFillColor(sf::Color::Transparent);
+    _tile.setOutlineColor(sf::Color::Color(255, 255, 255, 100));
+    _tile.setOutlineThickness((double)0.51);
+    _tile.setSize(_tileSize);
+    _tile.setPosition(_boardPos);
+}
+
+void SFMLRenderer::_setTilePos(int x, int y) {
+    _tile.setPosition(x + _boardPos.x, y + _boardPos.y);
+}
+
 sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
     switch (parameter) {
 
         case 0:
             // Empty Black
-            _tile.setFillColor(sf::Color::Black);
+            _tile.setFillColor(sf::Color::Color(0,0,0,100));
             break;
 
         case -1:
@@ -182,25 +259,8 @@ sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
             _tile.setFillColor(sf::Color::Black);
             break;
     }
+    
 
     return _tile;
 }
 
-void SFMLRenderer::_initializeTile() {
-    _tileSize.x = WINDOW_WIDTH * 0.0375;
-    _tileSize.y = WINDOW_HEIGHT * 0.0375;
-   
-    //_tileSize.x = 30;
-    //_tileSize.y = 30;
-
-
-    _tile.setFillColor(sf::Color::Transparent);
-    _tile.setOutlineColor(sf::Color::Color(75, 75, 75, 255));
-    _tile.setOutlineThickness((double)0.51);
-    _tile.setSize(_tileSize);
-    _tile.setPosition(_boardPos);
-}
-
-void SFMLRenderer::_setTilePos(int x, int y) {
-    _tile.setPosition(x + _boardPos.x, y + _boardPos.y);
-}

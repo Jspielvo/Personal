@@ -1,7 +1,8 @@
 ﻿  SFMLBoardRenderer.cpp
 c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(12): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(44): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
 c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(47): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(91): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(199): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(50): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(75): warning C4305: 'argument' : truncation from 'double' to 'float'
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(141): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(195): warning C4305: 'argument' : truncation from 'double' to 'float'
   TetrisIII.vcxproj -> C:\Users\John\Documents\Visual Studio 2013\Projects\Personal\TetrisIII\Debug\TetrisIII.exe

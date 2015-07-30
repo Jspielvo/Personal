@@ -4,7 +4,7 @@ BaseRenderer::BaseRenderer() {
 
 }
 
-void BaseRenderer::DrawBoard(int _board[20][10], int lowPos) {
+void BaseRenderer::RenderGUI(int _board[20][10], int lowPos) {
 
 }
 

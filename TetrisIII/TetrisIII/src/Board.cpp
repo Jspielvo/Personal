@@ -4,7 +4,7 @@
 #include <time.h>
 
 enum TileType{
-    bgBlack,
+    backgroundBlack,
     activePivotWhite,
     activeRed,
     activeBlue,
@@ -31,7 +31,7 @@ void Board::_initializeBoard() {
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            _board[i][j] = TileType::bgBlack;
+            _board[i][j] = TileType::backgroundBlack;
         }
     }
 }
@@ -54,7 +54,7 @@ void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
                     _board[y][x] = 1;
                 }
 
-                else if (_piece->matrix[piece][rotation][i][j] != TileType::bgBlack) {
+                else if (_piece->matrix[piece][rotation][i][j] != TileType::backgroundBlack) {
                     _board[y][x] = _activeColor;
                 }
             }
@@ -136,12 +136,12 @@ void Board::_clearBoard() {
     {
         for (int j = 0; j < BOARD_COLS; j++)
         {
-            if (_board[i][j] <= TileType::bgBlack) {
+            if (_board[i][j] <= TileType::backgroundBlack) {
                 _drawTile(i, j, _board[i][j]);
             }
 
             else {
-                _drawTile(i, j, TileType::bgBlack);
+                _drawTile(i, j, TileType::backgroundBlack);
             }
         }
     }
@@ -189,7 +189,7 @@ bool Board::_hasCollided(int rotation, int eastAdj, int westAdj, int southAdj) {
     {
         for (int j = 0; j < 5; j++)
         {
-            if (_piece->matrix[_activePiece][rotation][i][j] != TileType::bgBlack) {
+            if (_piece->matrix[_activePiece][rotation][i][j] != TileType::backgroundBlack) {
 
                 // Check for collision with board boundaries.
                 if (i + row + southAdj > 21 || i + row < 0 || j + col + eastAdj > 11 || j + col + westAdj <= 1) {
