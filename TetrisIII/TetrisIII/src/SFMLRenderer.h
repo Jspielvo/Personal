@@ -14,6 +14,7 @@ private:
     static sf::Font _font;
     static sf::Text _headerText;
     sf::Text _score;
+    sf::Text _level; 
     sf::Image imageH;
     sf::Image imageL;
     sf::Image imageR;
@@ -52,4 +53,5 @@ public:
     sf::RenderWindow& GetWindow();
     void RenderGUI(int board[20][10], int lowPos);
     void DrawScore(int score);
+    void DrawLevel(int level);
 };

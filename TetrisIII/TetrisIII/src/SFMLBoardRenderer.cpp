@@ -56,6 +56,7 @@ void SFMLRenderer::RenderGUI(int board[20][10], int lowPos) {
 
 void SFMLRenderer::_drawGUI() {
     Window.draw(_score);
+    Window.draw(_level);
     Window.draw(_headerText);
     //Window.draw(_header);
     //Window.draw(_footerHUD);
@@ -72,8 +73,17 @@ void SFMLRenderer::DrawScore(int score) {
     _drawLeadingZeroes(score);
 
     _score.setOrigin(_score.getLocalBounds().width / 2, _score.getLocalBounds().height / 2);
-    _score.setPosition(120, WINDOW_HEIGHT * 0.2875);
+    _score.setPosition(WINDOW_WIDTH * 0.15, WINDOW_HEIGHT * 0.2875);
 
+}
+
+void SFMLRenderer::DrawLevel(int level) {
+    _level.setFont(_font);
+    _level.setString(std::to_string(level));
+    _level.setCharacterSize(30);
+    _level.setColor(sf::Color::White);
+    _level.setOrigin(_level.getLocalBounds().width / 2, _level.getLocalBounds().height / 2);
+    _level.setPosition(WINDOW_WIDTH * 0.2225, WINDOW_HEIGHT * 0.190);
 }
 
 void SFMLRenderer::_drawLeadingZeroes(int score) {

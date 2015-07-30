@@ -36,6 +36,7 @@ void Game::_initializeGame() {
         _increaseDifficulty();
         _baseRenderer->RenderGUI(_board->_board, _board->GetLowestTile());                       // Outputs visualization
         _baseRenderer->DrawScore(_board->player.Score);
+        _baseRenderer->DrawLevel(_gameLevel);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }
@@ -79,11 +80,16 @@ void Game::_handleEvents() {
 }
 
 void Game::_increaseDifficulty() {
-    if (_board->player.Score % 400 == 1) {
-        _increaseSpeed(_gameSpeed - 50);
-        _gameLevel++;
-        std::cout << _gameLevel << std::endl;
-    }
+    int score = _board->player.Score;
+    int level = 0;
+
+    do {
+        score /= 200;                           /// ALMOST WORKING: needs to be tested.
+        level++;
+    } while (score);
+
+    _gameLevel = level;
+    _gameSpeed = 500 - level * 50;
 }
 
 void Game::_increaseSpeed(int speed) {

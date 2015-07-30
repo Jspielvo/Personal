@@ -353,6 +353,7 @@ int Board::GetLowestTile() {
 
 
 
+
 // Testing Function: Outputs pivot position respective to board.
 void Board::_COUT_activePosition() {
     std::cout << "Position:\trow = " << _activePosition[0] << "\tcol = " << _activePosition[1] << std::endl;
