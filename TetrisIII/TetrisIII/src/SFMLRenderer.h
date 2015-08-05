@@ -1,4 +1,5 @@
 #include "BaseRenderer.h"
+#include "RenderObject.h"
 #include <SFML\Graphics.hpp>
 
 class SFMLRenderer : public BaseRenderer {
@@ -13,23 +14,23 @@ private:
     sf::RectangleShape _getTileOfType(int parameter);
     static sf::Font _font;
     static sf::Text _headerText;
+    sf::Text _gameOver;
     sf::Text _score;
     sf::Text _level; 
     sf::Image imageH;
     sf::Image imageL;
     sf::Image imageR;
     sf::Image imageB;
-    sf::Image imageBg;
     sf::Texture textureH;
     sf::Texture textureB;
     sf::Texture textureL;
     sf::Texture textureR;
-    sf::Texture textureBg;
     sf::Sprite _header;
-    sf::Sprite _leftHUD;
-    sf::Sprite _rightHUD;
-    sf::Sprite _footerHUD;
-    sf::Sprite _background;
+    //sf::Sprite _leftHUD;
+    //sf::Sprite _rightHUD;
+    //sf::Sprite _footerHUD;
+
+    RenderObject _background;
 
     void _createWindow();
     void _initializeTile();
@@ -52,6 +53,12 @@ public:
 
     sf::RenderWindow& GetWindow();
     void RenderGUI(int board[20][10], int lowPos);
-    void DrawScore(int score);
-    void DrawLevel(int level);
+    void DrawHoldPiece(int holdPiece[5][5], int x, int y);
+    void DrawNextPiece(int nextPiece[5][5], int x, int y);
+    void DrawScore(int score, int x, int y);
+    void DrawLevel(int level, int x, int y);
+    void DrawGameOver(int x, int y);
+    void DrawStartMenu();
+    void DrawInGameMenu(int x, int y);
+    void DrawClearRowAnimation(int level, int x, int y);
 };

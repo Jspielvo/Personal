@@ -17,6 +17,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Piece.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RenderObject.cpp" />
     <ClCompile Include="src\SFMLBoardRenderer.cpp" />
     <ClCompile Include="src\TextBoardRenderer.cpp" />
   </ItemGroup>
@@ -27,6 +28,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Piece.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\RenderObject.h" />
     <ClInclude Include="src\SFMLRenderer.h" />
     <ClInclude Include="src\TextRenderer.h" />
   </ItemGroup>

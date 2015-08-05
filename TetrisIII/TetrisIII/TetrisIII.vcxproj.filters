@@ -45,6 +45,9 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RenderObject.cpp">
+      <Filter>Source Files\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Board.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="src\Player.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderObject.h">
+      <Filter>Header Files\Render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

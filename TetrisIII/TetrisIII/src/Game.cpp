@@ -21,7 +21,7 @@ Game::Game(Board* board, BaseRenderer* baseRenderer, sf::RenderWindow* window) {
 }
 
 // Initializes game loop
-void Game::_initializeGame() {        
+void Game::_initializeGame() {
     sf::Clock clock;
 
     while (!_gameOver()) {                                                                       // Continue looping until top row has a tile
@@ -31,17 +31,24 @@ void Game::_initializeGame() {
             _board->Move(SOUTH);
             clock.restart();
         }
-        
+
         _handleEvents();                                                                         // Handles window input
         _increaseDifficulty();
         _baseRenderer->RenderGUI(_board->_board, _board->GetLowestTile());                       // Outputs visualization
-        _baseRenderer->DrawScore(_board->player.Score);
-        _baseRenderer->DrawLevel(_gameLevel);
-
+        _baseRenderer->DrawScore(_board->player.Score, 120, 230);
+        _baseRenderer->DrawLevel(_gameLevel, 178, 152);
+        _baseRenderer->DrawNextPiece(_board->_nextPieceMatrix, 215, -265);
+        _baseRenderer->DrawHoldPiece(_board->_holdPieceMatrix, 215, -81);
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }
 
-    std::cout << "\t\GAME OVER!" << std::endl;
+    _board->GameOverFillBoard();
+    _baseRenderer->RenderGUI(_board->_board, _board->GetLowestTile());
+    _baseRenderer->DrawGameOver(400, 400);
+    window->display();
+
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 }
 
 // Handles input
@@ -61,9 +68,19 @@ void Game::_handleEvents() {
             if (event.key.code == sf::Keyboard::Key::Space) {
                 _board->DropTile();
             }
+            if (event.key.code == sf::Keyboard::Key::Pause) {
+                _pauseGame(event);
+            }
+            if (event.key.code == sf::Keyboard::RControl) {
+                if (_board->IsHoldingPiece()) {
+                    _board->SetNextPieceToHold();
+                }
+                else {
+                    _board->HoldPiece();
+                }
+            }
         }
     }
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
         _board->Move(SOUTH);
     }
@@ -81,15 +98,9 @@ void Game::_handleEvents() {
 
 void Game::_increaseDifficulty() {
     int score = _board->player.Score;
-    int level = 0;
-
-    do {
-        score /= 200;                           /// ALMOST WORKING: needs to be tested.
-        level++;
-    } while (score);
-
-    _gameLevel = level;
-    _gameSpeed = 500 - level * 50;
+    
+    _gameLevel = score / 500;
+    _gameSpeed = 500 - _gameLevel * 50;
 }
 
 void Game::_increaseSpeed(int speed) {
@@ -105,4 +116,11 @@ bool Game::_gameOver() {
         }
     }
     return false;
+}
+
+void Game::_pauseGame(sf::Event event) {
+    while (event.key.code == sf::Keyboard::Key::Pause) {
+            std::this_thread::sleep_for(std::chrono::microseconds(1));
+            window->pollEvent(event);
+    }
 }

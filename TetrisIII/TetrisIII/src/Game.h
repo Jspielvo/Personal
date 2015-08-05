@@ -17,6 +17,7 @@ private:
     bool _gameOver();                                   // Returns true if top row of board contains a permanent tile (represented by 3).
     void _increaseSpeed(int speed);
     void _increaseDifficulty();
+    void _pauseGame(sf::Event event);
 
 public:
     Game(Board* board, BaseRenderer* baseRenderer);

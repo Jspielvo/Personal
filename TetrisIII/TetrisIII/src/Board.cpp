@@ -12,7 +12,8 @@ enum TileType{
     activeYellow,
     activePurple,
     activeTeal,
-    activeOrange
+    activeOrange,
+    gameOverGold
 };
 
 // Default constructor
@@ -22,7 +23,8 @@ Board::Board(Piece* piece) {
     _activePosition.resize(2);
     _activeColor = rand() % 7 + 2;
     _initializeBoard();
-    _drawPieceAt(0, 0, 0, 4);
+    _initializeNextPiece();
+    _drawPieceOnBoardAt(0, 0, 0, 4);
 }
 
 // Initializes all values of board array to 0.
@@ -37,7 +39,7 @@ void Board::_initializeBoard() {
 }
 
 // Writes a piece to the board at a specific row and column.
-void Board::_drawPieceAt(int piece, int rotation, int row, int col) {
+void Board::_drawPieceOnBoardAt(int piece, int rotation, int row, int col) {
     _activePiece = piece;
     _activeRotation = rotation;
 
@@ -74,22 +76,22 @@ void Board::Move(Direction direction) {
             //Rotate
             if (_canMove(NORTH)) {
                 _activeRotation = (_activeRotation == 3) ? -1 : _activeRotation;
-                _drawPieceAt(_activePiece, _activeRotation + 1, _activePosition[0], _activePosition[1]);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation + 1, _activePosition[0], _activePosition[1]);
             }
 
             else {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
             break;
 
         case SOUTH:
             //Down
             if (_canMove(SOUTH)) {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0] + 1, _activePosition[1]);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0] + 1, _activePosition[1]);
             }
 
             else {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
                 _makePermanent();
                 _checkAllRows();
                 _getNextPiece();
@@ -99,22 +101,22 @@ void Board::Move(Direction direction) {
         case WEST:
             //Left 
             if (_canMove(WEST)) {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] - 1);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] - 1);
             }
 
             else {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
             break;
 
         case EAST:
             //Right
             if (_canMove(EAST)) {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] + 1);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1] + 1);
             }
 
             else {
-                _drawPieceAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
+                _drawPieceOnBoardAt(_activePiece, _activeRotation, _activePosition[0], _activePosition[1]);
             }
             break;
 
@@ -260,21 +262,113 @@ void Board::_setNextPieceParameters() {
 }
 
 // Implement function! //
-void Board::PreviewNextPiece() {
+int Board::GetNextPiece() {
+    return _nextPiece;
+}
+
+void Board::_initializeNextPiece() {
     _setNextPieceParameters();
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (_piece->matrix[_nextPiece][_nextRotation][i][j] == 1) {
+                _nextPieceMatrix[i][j] = 1;
+            }
+            else if (_piece->matrix[_nextPiece][_nextRotation][i][j] != TileType::backgroundBlack) {
+                _nextPieceMatrix[i][j] = _nextColor;
+            }
+        }
+    }
 }
 
 // Creates and draws a random piece of random orientation and sets _activePiece and _activeRotation
 void Board::_getNextPiece() {
-    _setNextPieceParameters();
-
     _activePiece = _nextPiece;
     _activeRotation = _nextRotation;
     _activeColor = _nextColor;
 
-    _drawPieceAt(_nextPiece, _nextRotation, 0, 4);
+    _drawPieceOnBoardAt(_nextPiece, _nextRotation, 0, 4);
+    _clearNextPiece();
+    _initializeNextPiece();
 }
 
+void Board::_clearNextPiece() {
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            _nextPieceMatrix[i][j] = 0;
+        }
+    }
+}
+
+void Board::HoldPiece() {
+    _clearHoldPiece();
+    _storePieceToHold();
+    _clearBoard();
+    _getNextPiece();
+}
+
+void Board::SetNextPieceToHold() {
+    _nextPiece = _holdPiece;
+    _nextRotation = _holdRotation;
+    _nextColor = _holdColor;
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            _nextPieceMatrix[i][j] = _holdPieceMatrix[i][j];
+        }
+    }
+    _clearHoldPiece();
+}
+
+void Board::_storePieceToHold() {
+    _holdPiece = _activePiece;
+    _holdRotation = _activeRotation;
+    _holdColor = _activeColor;
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (_piece->matrix[_activePiece][_activeRotation][i][j] == 1) {
+                _holdPieceMatrix[i][j] = 1;
+            }
+
+            else if (_piece->matrix[_activePiece][_activeRotation][i][j] != TileType::backgroundBlack) {
+                _holdPieceMatrix[i][j] = _activeColor;
+            }
+        }
+    }
+}
+
+bool Board::IsHoldingPiece() {
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (_holdPieceMatrix[i][j] != 0) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void Board::_clearHoldPiece() {
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            _holdPieceMatrix[i][j] = 0;
+        }
+    }
+}
 // Calls _clearRow on rows not containing blank tiles (0).
 bool Board::_checkForCompleteRows() {
     if (_getCompleteRow() >= 0) {
@@ -340,8 +434,15 @@ int Board::GetLowestTile() {
     }
 }
 
-
-
+void Board::GameOverFillBoard() {
+    for (int i = 0; i < BOARD_ROWS; i++)
+    {
+        for (int j = 0; j < BOARD_COLS; j++)
+        {
+            _board[i][j] = TileType::gameOverGold;
+        }
+    }
+}
 
 
 

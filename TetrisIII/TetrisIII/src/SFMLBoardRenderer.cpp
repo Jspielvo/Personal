@@ -1,6 +1,7 @@
 #include <iostream>
 #include "SFMLRenderer.h"
 #include <random>
+#include <string>
 
 sf::Font SFMLRenderer::_font;
 sf::Text SFMLRenderer::_headerText;
@@ -22,9 +23,9 @@ void SFMLRenderer::_initializeGUI() {
 
     _initializeBackground();
     _initializeHeader();
-    _initializeFooter();
-    _initializeLeftHUD();
-    _initializeRightHUD();
+    //_initializeFooter();
+    //_initializeLeftHUD();
+    //_initializeRightHUD();
     _initializeTile();
 }
 
@@ -38,7 +39,7 @@ void SFMLRenderer::_drawTile(int type) {
 }
 
 void SFMLRenderer::RenderGUI(int board[20][10], int lowPos) {
-    Window.draw(_background);
+    Window.draw(_background.GetSprite());
 
     for (int i = 0; i < 20; i++)
     {
@@ -51,8 +52,36 @@ void SFMLRenderer::RenderGUI(int board[20][10], int lowPos) {
     }
 
     _drawGUI();
+}
+
+void SFMLRenderer::DrawNextPiece(int nextPiece[5][5], int x, int y) {
+    
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+
+            _setTilePos(x + i * _tileSize.x, y + j * _tileSize.y);
+            _drawTile(nextPiece[j][i]);
+        }
+        _setTilePos(_tileSize.y * i + _tileSize.y, 0);
+    }
+
+}
+
+void SFMLRenderer::DrawHoldPiece(int holdPiece[5][5], int x, int y) {
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            _setTilePos(x + i * _tileSize.x, y + j * _tileSize.y);
+            _drawTile(holdPiece[j][i]);
+        }
+        _setTilePos(_tileSize.y * i + _tileSize.y, 0);
+    }
     Window.display();
 }
+
 
 void SFMLRenderer::_drawGUI() {
     Window.draw(_score);
@@ -64,7 +93,12 @@ void SFMLRenderer::_drawGUI() {
     //Window.draw(_rightHUD);
 }
 
-void SFMLRenderer::DrawScore(int score) {
+void SFMLRenderer::DrawScore(int score, int x, int y) {
+    double dx = (double)x / WINDOW_WIDTH;
+    double dy = (double)y / WINDOW_HEIGHT;
+    int xPos = WINDOW_WIDTH * dx;
+    int yPos = WINDOW_HEIGHT * dy;
+
     _score.setFont(_font);
     _score.setString(std::to_string(score));
     _score.setCharacterSize(30);
@@ -73,41 +107,70 @@ void SFMLRenderer::DrawScore(int score) {
     _drawLeadingZeroes(score);
 
     _score.setOrigin(_score.getLocalBounds().width / 2, _score.getLocalBounds().height / 2);
-    _score.setPosition(WINDOW_WIDTH * 0.15, WINDOW_HEIGHT * 0.2875);
+    _score.setPosition(xPos, yPos);
+    Window.draw(_score);
 
 }
 
-void SFMLRenderer::DrawLevel(int level) {
+void SFMLRenderer::DrawLevel(int level, int x, int y) {
+    double dx = (double)x / WINDOW_WIDTH;
+    double dy = (double)y / WINDOW_HEIGHT;
+    int xPos = WINDOW_WIDTH * dx;
+    int yPos = WINDOW_HEIGHT * dy;
+
     _level.setFont(_font);
     _level.setString(std::to_string(level));
     _level.setCharacterSize(30);
     _level.setColor(sf::Color::White);
     _level.setOrigin(_level.getLocalBounds().width / 2, _level.getLocalBounds().height / 2);
-    _level.setPosition(WINDOW_WIDTH * 0.2225, WINDOW_HEIGHT * 0.190);
+    _level.setPosition(xPos, yPos);
+    Window.draw(_level);
 }
 
+void SFMLRenderer::DrawGameOver(int x, int y) {
+    double dx = (double)x / WINDOW_WIDTH;
+    double dy = (double)y / WINDOW_HEIGHT;
+    int xPos = WINDOW_WIDTH * dx;
+    int yPos = WINDOW_HEIGHT * dy;
+
+    _gameOver.setFont(_font);
+    _gameOver.setString("GAME OVER");
+    _gameOver.setColor(sf::Color::White);
+    _gameOver.setCharacterSize(50);
+    _gameOver.setOrigin(_gameOver.getLocalBounds().width / 2, _gameOver.getLocalBounds().height / 2);
+    _gameOver.setPosition(xPos, yPos);
+    Window.draw(_gameOver);
+}
+
+void SFMLRenderer::DrawStartMenu() {
+
+}
+
+void SFMLRenderer::DrawInGameMenu(int x, int y) {
+    double dx = (double)x / WINDOW_WIDTH;
+    double dy = (double)y / WINDOW_HEIGHT;
+    int xPos = WINDOW_WIDTH * dx;
+    int yPos = WINDOW_HEIGHT * dy;
+}
+
+void SFMLRenderer::DrawClearRowAnimation(int level, int x, int y) {
+    double dx = (double)x / WINDOW_WIDTH;
+    double dy = (double)y / WINDOW_HEIGHT;
+    int xPos = WINDOW_WIDTH * dx;
+    int yPos = WINDOW_HEIGHT * dy;
+}
+
+
+
 void SFMLRenderer::_drawLeadingZeroes(int score) {
-    if (_getLengthOfInt(score, 10) == 3) {
-        _score.setString("00000" + std::to_string(score));
+    std::string s;
+    int temp = 8 - _getLengthOfInt(score, 10);
+    for (int i = 0; i < temp; i++)
+    {
+        s += "0";
     }
-    else if (_getLengthOfInt(score, 10) == 4) {
-        _score.setString("0000" + std::to_string(score));
-    }
-    else if (_getLengthOfInt(score, 10) == 5) {
-        _score.setString("0000" + std::to_string(score));
-    }
-    else if (_getLengthOfInt(score, 10) == 6) {
-        _score.setString("000" + std::to_string(score));
-    }
-    else if (_getLengthOfInt(score, 10) == 7) {
-        _score.setString("00" + std::to_string(score));
-    }
-    else if (_getLengthOfInt(score, 10) == 8) {
-        _score.setString("0" + std::to_string(score));
-    }
-    else {
-        _score.setString("00000000");
-    }
+    s += std::to_string(score);
+    _score.setString(s);
 }
 
 int SFMLRenderer::_getLengthOfInt(int value, int base) {
@@ -130,16 +193,16 @@ void SFMLRenderer::_loadFont() {
 
 
 void SFMLRenderer::_initializeHeader() {
-   _loadFont();
+    _loadFont();
 
-   if (!imageH.loadFromFile("data/header.png")) {
-       std::cout << "Error loading header.png" << std::endl;
-       exit(1);
-   }
+    if (!imageH.loadFromFile("data/header.png")) {
+        std::cout << "Error loading header.png" << std::endl;
+        exit(1);
+    }
 
-   textureH.loadFromImage(imageH);
-   _header.setTexture(textureH);
-   _header.setPosition(249, 0);
+    textureH.loadFromImage(imageH);
+    _header.setTexture(textureH);
+    _header.setPosition(249, 0);
 
     _headerText.setString("TETRIS");
     _headerText.Bold;
@@ -150,51 +213,49 @@ void SFMLRenderer::_initializeHeader() {
     _headerTextPos.x = WINDOW_WIDTH / 2;
     _headerTextPos.y = _boardPos.y * 0.125 + -_headerText.getLocalBounds().height / 2;
     _headerText.setPosition(_headerTextPos);
-    
-}
 
-
-void SFMLRenderer::_initializeFooter() {
-    if (!imageB.loadFromFile("data/footerHUD.png")) {
-        std::cout << "Error loading footerHUD.png" << std::endl;
-        exit(1);
-    }
-    
-    textureB.loadFromImage(imageB);
-    _footerHUD.setTexture(textureB);
-    _footerHUD.setPosition(249, 700);
 }
 
 void SFMLRenderer::_initializeBackground() {
-    if (!imageBg.loadFromFile("data/bg.png")) {
-        std::cout << "Error loading bg.png." << std::endl;
-        exit(1);
-    }
-    textureBg.loadFromImage(imageBg);
-    _background.setTexture(textureBg);
+    Vector2f pos(0, 0);
+    _background.SetPosition(pos);
+    _background.SetImage("data/bg.png");
+    _background.SetTexture(_background.GetImage());
+    _background.SetSprite();
 }
 
-void SFMLRenderer::_initializeLeftHUD() {
-    
-    if (!imageL.loadFromFile("data/leftHUD.png")) {
-        std::cout << "Error loading leftHUD.png." << std::endl;
-        exit(1);
-    }
-    textureL.loadFromImage(imageL);    
-    _leftHUD.setTexture(textureL);
-    
-}
+//void SFMLRenderer::_initializeFooter() {
+//    if (!imageB.loadFromFile("data/footerHUD.png")) {
+//        std::cout << "Error loading footerHUD.png" << std::endl;
+//        exit(1);
+//    }
+//    
+//    textureB.loadFromImage(imageB);
+//    _footerHUD.setTexture(textureB);
+//    _footerHUD.setPosition(249, 700);
+//}
 
-void SFMLRenderer::_initializeRightHUD() {
-    if (!imageR.loadFromFile("data/rightHUD.png")) {
-        std::cout << "Error loading rightHUD.png." << std::endl;
-        exit(1);
-    }
-
-    textureR.loadFromImage(imageR);
-    _rightHUD.setTexture(textureR);
-    _rightHUD.setPosition(550, 0);
-}
+//void SFMLRenderer::_initializeLeftHUD() {
+//    
+//    if (!imageL.loadFromFile("data/leftHUD.png")) {
+//        std::cout << "Error loading leftHUD.png." << std::endl;
+//        exit(1);
+//    }
+//    textureL.loadFromImage(imageL);    
+//    _leftHUD.setTexture(textureL);
+//    
+//}
+//
+//void SFMLRenderer::_initializeRightHUD() {
+//    if (!imageR.loadFromFile("data/rightHUD.png")) {
+//        std::cout << "Error loading rightHUD.png." << std::endl;
+//        exit(1);
+//    }
+//
+//    textureR.loadFromImage(imageR);
+//    _rightHUD.setTexture(textureR);
+//    _rightHUD.setPosition(550, 0);
+//}
 
 void SFMLRenderer::_initializeTile() {
     _tileSize.x = WINDOW_WIDTH * 0.0375;
@@ -263,6 +324,12 @@ sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
         case 8:
             // Orange
             _tile.setFillColor(sf::Color::Color(214, 91, 43));
+            break;
+
+        case -9:
+        case 9:
+            // Gold
+            _tile.setFillColor(sf::Color::Color(0, 0, 0));
             break;
 
         default:
