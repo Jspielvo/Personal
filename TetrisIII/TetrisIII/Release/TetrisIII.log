@@ -1,0 +1,93 @@
+﻿  BaseBoardRenderer.cpp
+  Board.cpp
+src\Board.cpp(21): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+  Game.cpp
+  main.cpp
+  Piece.cpp
+  Player.cpp
+  RenderObject.cpp
+  SFMLBoardRenderer.cpp
+src\SFMLBoardRenderer.cpp(13): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+src\SFMLBoardRenderer.cpp(48): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(51): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(72): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(75): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(95): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(98): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(119): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(129): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+src\SFMLBoardRenderer.cpp(137): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(138): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(145): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+src\SFMLBoardRenderer.cpp(152): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(153): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(160): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+src\SFMLBoardRenderer.cpp(171): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(172): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(178): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(179): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+src\SFMLBoardRenderer.cpp(233): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+src\SFMLBoardRenderer.cpp(285): warning C4305: 'argument' : truncation from 'double' to 'float'
+  TextBoardRenderer.cpp
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Window::display(void)" (__imp_?display@Window@sf@@QAEXXZ)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Window::pollEvent(class sf::Event &)" (__imp_?pollEvent@Window@sf@@QAE_NAAVEvent@2@@Z)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Window::close(void)" (__imp_?close@Window@sf@@QAEXXZ)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (__imp_?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: int __thiscall sf::Time::asMilliseconds(void)const " (__imp_?asMilliseconds@Time@sf@@QBEHXZ)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Time __thiscall sf::Clock::restart(void)" (__imp_?restart@Clock@sf@@QAE?AVTime@2@XZ)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Time __thiscall sf::Clock::getElapsedTime(void)const " (__imp_?getElapsedTime@Clock@sf@@QBE?AVTime@2@XZ)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Clock::Clock(void)" (__imp_??0Clock@sf@@QAE@XZ)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::clear(class sf::Color const &)" (__imp_?clear@RenderTarget@sf@@QAEXABVColor@2@@Z)
+Game.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (__imp_??0Color@sf@@QAE@EEEE@Z)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::RenderWindow::~RenderWindow(void)" (__imp_??1RenderWindow@sf@@UAE@XZ)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Image::~Image(void)" (__imp_??1Image@sf@@QAE@XZ)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::~Texture(void)" (__imp_??1Texture@sf@@QAE@XZ)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Font::~Font(void)" (__imp_??1Font@sf@@QAE@XZ)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Sprite::~Sprite(void)" (__imp_??1Sprite@sf@@UAE@XZ)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Text::~Text(void)" (__imp_??1Text@sf@@UAE@XZ)
+main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::RectangleShape::~RectangleShape(void)" (__imp_??1RectangleShape@sf@@UAE@XZ)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RectangleShape::RectangleShape(class sf::Vector2<float> const &)" (__imp_??0RectangleShape@sf@@QAE@ABV?$Vector2@M@1@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setPosition(class sf::Vector2<float> const &)" (__imp_?setPosition@Transformable@sf@@QAEXABV?$Vector2@M@2@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Image::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (__imp_?loadFromFile@Image@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Image::Image(void)" (__imp_??0Image@sf@@QAE@XZ)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Texture::loadFromImage(class sf::Image const &,class sf::Rect<int> const &)" (__imp_?loadFromImage@Texture@sf@@QAE_NABVImage@2@ABV?$Rect@H@2@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::Texture(void)" (__imp_??0Texture@sf@@QAE@XZ)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::Texture(class sf::Texture const &)" (__imp_??0Texture@sf@@QAE@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Font::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (__imp_?loadFromFile@Font@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Font::Font(void)" (__imp_??0Font@sf@@QAE@XZ)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Font::Font(class sf::Font const &)" (__imp_??0Font@sf@@QAE@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTexture(class sf::Texture const &,bool)" (__imp_?setTexture@Sprite@sf@@QAEXABVTexture@2@_N@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(void)" (__imp_??0Sprite@sf@@QAE@XZ)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Text::Text(void)" (__imp_??0Text@sf@@QAE@XZ)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(class sf::Sprite const &)" (__imp_??0Sprite@sf@@QAE@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Image::Image(class sf::Image const &)" (__imp_??0Image@sf@@QAE@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Text::Text(class sf::Text const &)" (__imp_??0Text@sf@@QAE@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RectangleShape::RectangleShape(class sf::RectangleShape const &)" (__imp_??0RectangleShape@sf@@QAE@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Text & __thiscall sf::Text::operator=(class sf::Text const &)" (__imp_??4Text@sf@@QAEAAV01@ABV01@@Z)
+RenderObject.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::RectangleShape & __thiscall sf::RectangleShape::operator=(class sf::RectangleShape const &)" (__imp_??4RectangleShape@sf@@QAEAAV01@ABV01@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::White" (__imp_?White@Color@sf@@2V12@B)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Shape::setOutlineThickness(float)" (__imp_?setOutlineThickness@Shape@sf@@QAEXM@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Shape::setOutlineColor(class sf::Color const &)" (__imp_?setOutlineColor@Shape@sf@@QAEXABVColor@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Shape::setFillColor(class sf::Color const &)" (__imp_?setFillColor@Shape@sf@@QAEXABVColor@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RectangleShape::setSize(class sf::Vector2<float> const &)" (__imp_?setSize@RectangleShape@sf@@QAEXABV?$Vector2@M@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RenderWindow::RenderWindow(void)" (__imp_??0RenderWindow@sf@@QAE@XZ)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Transparent" (__imp_?Transparent@Color@sf@@2V12@B)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setOrigin(float,float)" (__imp_?setOrigin@Transformable@sf@@QAEXMM@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setPosition(float,float)" (__imp_?setPosition@Transformable@sf@@QAEXMM@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Window::create(class sf::VideoMode,class sf::String const &,unsigned int,struct sf::ContextSettings const &)" (__imp_?create@Window@sf@@QAEXVVideoMode@2@ABVString@2@IABUContextSettings@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::RenderStates const sf::RenderStates::Default" (__imp_?Default@RenderStates@sf@@2V12@B)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::String(char const *,class std::locale const &)" (__imp_??0String@sf@@QAE@PBDABVlocale@std@@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::String(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::locale const &)" (__imp_??0String@sf@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABVlocale@3@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Black" (__imp_?Black@Color@sf@@2V12@B)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Blue" (__imp_?Blue@Color@sf@@2V12@B)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Rect<float> __thiscall sf::Text::getLocalBounds(void)const " (__imp_?getLocalBounds@Text@sf@@QBE?AV?$Rect@M@2@XZ)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setColor(class sf::Color const &)" (__imp_?setColor@Text@sf@@QAEXABVColor@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setCharacterSize(unsigned int)" (__imp_?setCharacterSize@Text@sf@@QAEXI@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setFont(class sf::Font const &)" (__imp_?setFont@Text@sf@@QAEXABVFont@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setString(class sf::String const &)" (__imp_?setString@Text@sf@@QAEXABVString@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::VideoMode::VideoMode(unsigned int,unsigned int,unsigned int)" (__imp_??0VideoMode@sf@@QAE@III@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Red" (__imp_?Red@Color@sf@@2V12@B)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (__imp_?draw@RenderTarget@sf@@QAEXABVDrawable@2@ABVRenderStates@2@@Z)
+SFMLBoardRenderer.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::~String(void)" (__imp_??1String@sf@@QAE@XZ)
+C:\Users\John\Documents\Visual Studio 2013\Projects\Personal\TetrisIII\Release\TetrisIII.exe : fatal error LNK1120: 60 unresolved externals

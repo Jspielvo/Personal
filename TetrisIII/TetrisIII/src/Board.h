@@ -64,5 +64,4 @@ private:
     void _clearCompleteRows();
     int _getCompleteRow();                                                                    // Returns row which requires deleting.
     void _clearRow(int row);                                                                  // Clears row and drops above rows down by one.
-    //enum class TileType;
 };

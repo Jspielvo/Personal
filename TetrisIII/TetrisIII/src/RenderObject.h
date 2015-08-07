@@ -17,6 +17,7 @@ public:
     Texture _texture;
     Sprite _sprite;
     RenderObject();
+
     void SetPosition(Vector2f pos);
     void SetTile(RectangleShape tile);
     void SetFont(std::string fontPath);
@@ -24,6 +25,7 @@ public:
     void SetImage(std::string imagePath);
     void SetTexture(Image image);
     void SetSprite();
+    void SetSpriteSize(int width, int height);
 
     Vector2f GetPosition();
     RectangleShape GetTile();

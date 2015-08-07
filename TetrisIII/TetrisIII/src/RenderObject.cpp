@@ -42,6 +42,13 @@ void RenderObject::SetSprite() {
     _sprite.setPosition(_position);
 }
 
+void RenderObject::SetSpriteSize(int width, int height) {
+    float x = (float)width / _texture.getSize().x;
+    float y = (float)height / _texture.getSize().y;
+
+    _sprite.setScale(x, y);
+} 
+
 Vector2f RenderObject::GetPosition() {
     return _position;
 }

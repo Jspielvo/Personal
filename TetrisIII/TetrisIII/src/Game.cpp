@@ -37,8 +37,9 @@ void Game::_initializeGame() {
         _baseRenderer->RenderGUI(_board->_board, _board->GetLowestTile());                       // Outputs visualization
         _baseRenderer->DrawScore(_board->player.Score, 120, 230);
         _baseRenderer->DrawLevel(_gameLevel, 178, 152);
-        _baseRenderer->DrawNextPiece(_board->_nextPieceMatrix, 215, -265);
-        _baseRenderer->DrawHoldPiece(_board->_holdPieceMatrix, 215, -81);
+        _baseRenderer->DrawNextPiece(_board->_nextPieceMatrix, 213, -265);
+        _baseRenderer->DrawHoldPiece(_board->_holdPieceMatrix, 213, -81);
+
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }
 
@@ -71,7 +72,7 @@ void Game::_handleEvents() {
             if (event.key.code == sf::Keyboard::Key::Pause) {
                 _pauseGame(event);
             }
-            if (event.key.code == sf::Keyboard::RControl) {
+            if (event.key.code == sf::Keyboard::RControl || event.key.code == sf::Keyboard::LControl) {
                 if (_board->IsHoldingPiece()) {
                     _board->SetNextPieceToHold();
                 }

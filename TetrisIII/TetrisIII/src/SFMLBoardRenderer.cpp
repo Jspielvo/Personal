@@ -54,31 +54,53 @@ void SFMLRenderer::RenderGUI(int board[20][10], int lowPos) {
     _drawGUI();
 }
 
+// NEEDS CLEAN UP
+
 void SFMLRenderer::DrawNextPiece(int nextPiece[5][5], int x, int y) {
-    
+    _tile.setOutlineColor(sf::Color::Transparent);
+    _tile.setFillColor(sf::Color::Transparent);
+
+
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
         {
-
+            if (nextPiece[j][i] == 0) {
+                _tile.setOutlineColor(sf::Color::Transparent);
+            }
+            else {
+                _tile.setOutlineColor(sf::Color::Black);
+            }
             _setTilePos(x + i * _tileSize.x, y + j * _tileSize.y);
             _drawTile(nextPiece[j][i]);
         }
         _setTilePos(_tileSize.y * i + _tileSize.y, 0);
     }
 
+    _tile.setOutlineColor(sf::Color::Color(255, 255, 255, 100));
 }
+// NEEDS CLEAN UP
 
 void SFMLRenderer::DrawHoldPiece(int holdPiece[5][5], int x, int y) {
+    _tile.setOutlineColor(sf::Color::Transparent);
+    _tile.setFillColor(sf::Color::Transparent);
+    
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
         {
+            if (holdPiece[j][i] == 0) {
+                _tile.setOutlineColor(sf::Color::Transparent);
+            }
+            else {
+                _tile.setOutlineColor(sf::Color::Black);
+            }
             _setTilePos(x + i * _tileSize.x, y + j * _tileSize.y);
             _drawTile(holdPiece[j][i]);
         }
         _setTilePos(_tileSize.y * i + _tileSize.y, 0);
     }
+    _tile.setOutlineColor(sf::Color::Color(255, 255, 255, 100));
     Window.display();
 }
 
@@ -219,9 +241,11 @@ void SFMLRenderer::_initializeHeader() {
 void SFMLRenderer::_initializeBackground() {
     Vector2f pos(0, 0);
     _background.SetPosition(pos);
+    
     _background.SetImage("data/bg.png");
     _background.SetTexture(_background.GetImage());
     _background.SetSprite();
+    _background.SetSpriteSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 //void SFMLRenderer::_initializeFooter() {
@@ -340,4 +364,3 @@ sf::RectangleShape SFMLRenderer::_getTileOfType(int parameter) {
 
     return _tile;
 }
-
