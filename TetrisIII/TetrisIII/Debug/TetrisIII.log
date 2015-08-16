@@ -1,27 +1,7 @@
-﻿  SFMLBoardRenderer.cpp
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(13): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(48): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(51): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(74): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(77): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(98): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(101): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(121): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(122): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(132): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(140): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(141): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(148): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(155): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(156): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(163): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(174): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(175): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(181): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(182): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(236): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\sfmlboardrenderer.cpp(290): warning C4305: 'argument' : truncation from 'double' to 'float'
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
+﻿  Game.cpp
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\game.cpp(167): warning C4018: '<' : signed/unsigned mismatch
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\game.cpp(174): warning C4018: '<' : signed/unsigned mismatch
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\game.cpp(184): warning C4018: '<' : signed/unsigned mismatch
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\game.cpp(198): warning C4018: '<' : signed/unsigned mismatch
+c:\users\john\documents\visual studio 2013\projects\personal\tetrisiii\tetrisiii\src\game.cpp(222): warning C4018: '<' : signed/unsigned mismatch
   TetrisIII.vcxproj -> C:\Users\John\Documents\Visual Studio 2013\Projects\Personal\TetrisIII\Debug\TetrisIII.exe

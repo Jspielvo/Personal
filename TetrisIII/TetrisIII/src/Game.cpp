@@ -8,8 +8,10 @@
 Game::Game(Board* board, BaseRenderer* baseRenderer) {
     _board = board;
     _baseRenderer = baseRenderer;
-    _initializeGame();
-    
+    //_initializeStreams();
+    ////_initializeGame();
+    //_getEntryFromDataFile();
+    //dataIn.close();
 }
 
 // 
@@ -17,7 +19,11 @@ Game::Game(Board* board, BaseRenderer* baseRenderer, sf::RenderWindow* window) {
     this->window = window;
     _board = board;
     _baseRenderer = baseRenderer;
-    _initializeGame();
+    _initializeStreams();
+    //_initializeGame();
+    _getEntryFromDataFile();
+    dataIn.close();
+    _writeDataEntries();
 }
 
 // Initializes game loop
@@ -124,4 +130,107 @@ void Game::_pauseGame(sf::Event event) {
             std::this_thread::sleep_for(std::chrono::microseconds(1));
             window->pollEvent(event);
     }
+}
+
+
+void Game::_initializeStreams() {
+    dataIn.open(DATA_IN_FILE_PATH);
+    dataOut.open(DATA_OUT_FILE_PATH);
+
+    if (dataIn.fail()) {
+        std::cerr << "Error: Cannot open " << DATA_IN_FILE_PATH << std::endl;
+        exit(1);
+    }
+
+    if (dataOut.fail()) {
+        std::cerr << "Error: Cannot open " << DATA_OUT_FILE_PATH << std::endl;
+        exit(1);
+    }
+}
+
+void Game::_getEntryFromDataFile() {
+    Player tempPlayer;
+    int i = 0;  
+
+    while (dataIn >> tempPlayer.Level >> tempPlayer.Score >> tempPlayer.Name) {
+        dataEntries.resize(i + 1);
+        dataEntries[i] = tempPlayer;
+        std::cout << dataEntries[i].Level << "\t" << dataEntries[i].Score << "\t" << dataEntries[i].Name << std::endl;
+        
+        i++;
+
+        
+    }
+    std::cout << std::endl;
+    _sortDataEntries();
+
+    for (int i = 0; i < dataEntries.size(); i++)
+    {
+        std::cout << dataEntries[i].Level << "\t" << dataEntries[i].Score << "\t" << dataEntries[i].Name << std::endl;
+    }
+}
+
+void Game::_sortDataEntries() {
+    for (int i = 0; i < dataEntries.size() - 1; i++)
+    {
+        int j = i + 1;
+
+        if (dataEntries[i].Level < dataEntries[j].Level) {
+            _swapEntries(i, j);
+        }
+
+    }
+
+    for (int i = 0; i < dataEntries.size() - 1; i++)
+    {
+        int j = i + 1;
+        if (dataEntries[i].Level == dataEntries[j].Level) {
+            if (dataEntries[i].Score < dataEntries[j].Score) {
+                _swapEntries(i, j);
+            }
+        }
+        else if (dataEntries[i].Level < dataEntries[i + 1].Level) {
+            _swapEntries(i, i + 1);
+        }
+
+    }
+
+    for (int i = 0; i < dataEntries.size() - 1; i++)
+    {
+        int j = i + 1;
+        if (dataEntries[i].Level == dataEntries[j].Level) {
+            if (dataEntries[i].Score < dataEntries[j].Score) {
+                _swapEntries(i, j);
+            }
+        }
+    }
+}
+
+void Game::_swapEntries(int i, int j) {
+    int tempLevel = dataEntries[i].Level;
+    int tempScore = dataEntries[i].Score;
+    std::string tempName = dataEntries[i].Name;
+
+    dataEntries[i] = dataEntries[j];
+    dataEntries[j].Level = tempLevel;
+    dataEntries[j].Score = tempScore;
+    dataEntries[j].Name = tempName;
+}
+
+void Game::_writeDataEntries() {
+
+    for (int i = 0; i < dataEntries.size(); i++)
+    {
+        dataOut << dataEntries[i].Level << "\t" << dataEntries[i].Name << "\t" << dataEntries[i].Score << "\n";
+    }
+
+    dataOut.close();
+}
+
+void Game::_addEntryToDataFile() {
+
+}
+
+void Game::_closeStream(std::fstream file) {
+    file.close();
 }

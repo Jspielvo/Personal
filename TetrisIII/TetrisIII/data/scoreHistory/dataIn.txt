@@ -1,0 +1,5 @@
+1 1000 John
+5 5000 Lauren
+15 15000 Daisy
+10 10000 Maja
+10 10500 John
